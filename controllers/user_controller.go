@@ -155,10 +155,10 @@ func LoginUser(c echo.Context) error {
 	}
 
 	// return success
-	utils.Logger.Info("Created successfully")
+	utils.Logger.Info("Login successfully")
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"code":      200,
-		"message":   "Created successfully",
+		"message":   "Login successfully",
 		"token":     token,
 		"token_exp": time.Now().Add(time.Hour * 1),
 	})
