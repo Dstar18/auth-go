@@ -122,3 +122,24 @@ Response Error (Invalid Token or Expired):
     "message": "Invalid Token"
 }
 ```
+
+**Protected Session Auth**
+- Method: [GET]
+- URL: {base_url}:3000/session/dashboard
+
+Session Cookie: Yes
+Response Error (No Login Session):
+```sh
+{
+    "code": 401,
+    "message": "Unauthorized"
+}
+```
+Response Success:
+```sh
+{
+    "code":    200,
+    "message": "Auth Session Successfully",
+    "data":    "Anda berhasil login menggunakan user bintang",
+}
+```
