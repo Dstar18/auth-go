@@ -144,6 +144,12 @@ func LoginUser(c echo.Context) error {
 		})
 	}
 
+	// Set session
+	session, _ := config.Store.Get(c.Request(), "session")
+	session.Values["authenticated"] = true
+	session.Values["username"] = userM.Username
+	session.Save(c.Request(), c.Response())
+
 	// get generate token
 	token, err := middleware.GenerateToken(userM.Username)
 	if err != nil {
@@ -161,5 +167,18 @@ func LoginUser(c echo.Context) error {
 		"message":   "Login successfully",
 		"token":     token,
 		"token_exp": time.Now().Add(time.Hour * 1),
+	})
+}
+
+func Logout(c echo.Context) error {
+	session, _ := config.Store.Get(c.Request(), "session")
+	session.Options.MaxAge = -1
+	session.Save(c.Request(), c.Response())
+
+	// return success
+	utils.Logger.Info("Logout successfully")
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"code":    200,
+		"message": "Logout successfully",
 	})
 }

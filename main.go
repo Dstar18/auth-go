@@ -31,13 +31,19 @@ func main() {
 	protectedJWT := e.Group("/jwt")
 	protectedJWT.Use(middleware.JWTMiddleware)
 
+	// Middleware Session
+	protectedSession := e.Group("/session")
+	protectedSession.Use(middleware.SessionMiddleware)
+
 	// Public Route
 	e.POST("/register", controllers.RegisterUser)
 	e.POST("/login", controllers.LoginUser)
+	e.GET("/logout", controllers.Logout)
 
 	// Protected Route
 	protectedBasicAuth.GET("/info", controllers.ProfileBasicAuth)
 	protectedJWT.GET("/notif", controllers.ProfileJWT)
+	protectedSession.GET("/dashboard", controllers.Dashboard)
 
 	// start server with logging
 	e.Logger.Fatal(e.Start(":3000"))

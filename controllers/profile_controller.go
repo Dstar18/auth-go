@@ -22,3 +22,13 @@ func ProfileJWT(c echo.Context) error {
 		"message": "JWT Successfully",
 	})
 }
+
+func Dashboard(c echo.Context) error {
+	username := c.Get("username").(string)
+	utils.Logger.Info("Anda berhasil login menggunakan user " + username)
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"code":    200,
+		"message": "Auth Session Successfully",
+		"data":    "Anda berhasil login menggunakan user " + username,
+	})
+}
